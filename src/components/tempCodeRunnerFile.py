@@ -1,9 +1,12 @@
 import sys
 import os
 
-from src.exception import CustomException
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
+# from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.components.model_trainer import ModelTrainer
@@ -15,6 +18,7 @@ class DataIngestionConfig:
     test_data_path: str = os.path.join('artifacts', 'test.csv')
     raw_data_train: str = os.path.join('artifacts', 'data.csv')
 
+
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
@@ -23,7 +27,7 @@ class DataIngestion:
         logging.info("Entered the data ingestion method or component.")
 
         try:
-            df = pd.read_csv('src/data/stud.csv')
+            df = pd.read_csv('notebook/data/stud.csv')
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
@@ -44,7 +48,7 @@ class DataIngestion:
             )
 
         except Exception as e:
-            raise Exception(e,sys)
+            raise Exception(e)
 
 
 if __name__ == "__main__":
